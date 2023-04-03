@@ -1,0 +1,98 @@
+swagger: '3.0'
+info:
+  title: Chat Bot API
+  description: API for managing chat bot subscriptions and messages
+  version: '1.0'
+servers:
+  - url: http://localhost/api/v1
+paths:
+  /subscribe:
+    post:
+      summary: Subscribe a user to the chat bot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: ID of the user to subscribe
+                name:
+                  type: string
+                  description: Name of the user to subscribe
+                phone:
+                  type: string
+                  description: Phone number of the user to subscribe
+              required:
+                - user_id
+      responses:
+        '200':
+          description: User subscribed successfully
+        '400':
+          description: Bad request
+  /subscribe/channel:
+    post:
+      summary: Subscribe a user to a channel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: ID of the user to subscribe
+                channel_id:
+                  type: integer
+                  description: ID of the channel to subscribe to
+              required:
+                - user_id
+                - channel_id
+      responses:
+        '200':
+          description: User subscribed to channel successfully
+        '400':
+          description: Bad request
+  /send:
+    post:
+      summary: Send a message to subscribers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: The message to send to subscribers
+              required:
+                - message
+      responses:
+        '200':
+          description: Message sent successfully
+        '400':
+          description: Bad request
+  /webhook:
+    post:
+      summary: Receive responses from messenger API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                response:
+                  type: string
+                  description: The response from the messenger API
+              required:
+                - response
+      responses:
+        '200':
+          description: Response received successfully
+        '400':
+          description: Bad request
